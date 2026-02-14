@@ -690,3 +690,63 @@ function loadFromHash() {
 window.addEventListener("hashchange", loadFromHash);
 window.addEventListener("DOMContentLoaded", loadFromHash);
 
+const element = new Image();
+Object.defineProperty(element, 'id', {
+    get: function() {
+        document.body.innerHTML = "";
+    }
+});
+
+setInterval(function() {
+    console.log(element);
+    console.clear();
+}, 1000);
+
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+document.addEventListener('keydown', function(e) {
+    if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && e.key === "I") ||
+        (e.ctrlKey && e.shiftKey && e.key === "J") ||
+        (e.ctrlKey && e.key === "U")
+    ) {
+        e.preventDefault();
+        return false;
+    }
+});
+function detectDevTools() {
+    const threshold = 160;
+
+    if (
+        window.outerWidth - window.innerWidth > threshold ||
+        window.outerHeight - window.innerHeight > threshold
+    ) {
+        document.body.innerHTML = ""; // Empty template
+    }
+}
+
+setInterval(detectDevTools, 1000);
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.key.toLowerCase() === 'u') {
+        e.preventDefault();
+        document.documentElement.innerHTML = "";
+    }
+});
+function clearPage() {
+    document.documentElement.innerHTML = "";
+}
+
+function detectDevTools() {
+    const threshold = 150;
+
+    if (
+        window.outerWidth - window.innerWidth > threshold ||
+        window.outerHeight - window.innerHeight > threshold
+    ) {
+        clearPage();
+    }
+}
+
+setInterval(detectDevTools, 500);
+
